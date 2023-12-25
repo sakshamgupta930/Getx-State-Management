@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_x/screen1.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,21 +13,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Get X")),
+        title: const Center(child: Text("Home")),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                // Get.to(const Screen1(name: "Saksham"));
-                Get.toNamed('/screen1', arguments: ['Saksham', 'Gupta']);
-              },
-              child: const Text("Go to next screen"),
+      body: Column(
+        children: [
+          Container(
+            height: Get.height * .3,
+            width: Get.width * .8,
+            color: Colors.red,
+            child: const Center(
+              child: Text('Center'),
             ),
-          ],
-        ),
+          ),
+          Container(
+            height: Get.height * .2,
+            width: Get.width * .8,
+            color: Colors.green,
+            child: const Center(
+              child: Text('Center'),
+            ),
+          ),
+        ],
       ),
     );
   }
