@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_x/slider_controller.dart';
+import 'package:get_x/switch_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,32 +10,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final SliderController controller = Get.put(SliderController());
-
+  SwitchController switchController = Get.put(SwitchController());
+  bool notification = false;
   @override
   Widget build(BuildContext context) {
-    print("object");
     return Scaffold(
         appBar: AppBar(
           title: const Center(child: Text("Get X")),
         ),
         body: Column(
           children: [
-            Obx(
-              () => Container(
-                height: 200,
-                width: 200,
-                color: Colors.red.withOpacity(controller.opacity.value),
-              ),
-            ),
-            Obx(
-              () => Slider(
-                value: controller.opacity.value,
-                onChanged: (value) {
-                  controller.setOpacity(value);
-                },
-              ),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Notification"),
+                Obx(
+                  () => Switch(
+                    value: switchController.notification.value,
+                    onChanged: (value) {
+                      switchController.setNotification(value);
+                    },
+                  ),
+                ),
+              ],
+            )
           ],
         ));
   }
