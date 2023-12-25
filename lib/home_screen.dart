@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_x/counter_controller.dart';
+import 'package:get_x/slider_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,27 +10,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final CounterController controller = Get.put(CounterController());
+  final SliderController controller = Get.put(SliderController());
 
   @override
   Widget build(BuildContext context) {
+    print("object");
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(child: Text("Get X")),
-      ),
-      body: Center(
-        child: Obx(
-          () => Text(
-            controller.counter.toString(),
-            style: const TextStyle(fontSize: 60),
-          ),
+        appBar: AppBar(
+          title: const Center(child: Text("Get X")),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {
-            controller.incrementCounter();
-          }),
-    );
+        body: Column(
+          children: [
+            Obx(
+              () => Container(
+                height: 200,
+                width: 200,
+                color: Colors.red.withOpacity(controller.opacity.value),
+              ),
+            ),
+            Obx(
+              () => Slider(
+                value: controller.opacity.value,
+                onChanged: (value) {
+                  controller.setOpacity(value);
+                },
+              ),
+            ),
+          ],
+        ));
   }
 }
