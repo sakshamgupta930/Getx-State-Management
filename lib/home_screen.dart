@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_x/counter_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,39 +10,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final CounterController controller = Get.put(CounterController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Home")),
+        title: const Center(child: Text("Get X")),
       ),
-      body: Column(
-        children: [
-          ListTile(
-            title: Text('message'.tr),
-            subtitle: Text('name'.tr),
+      body: Center(
+        child: Obx(
+          () => Text(
+            controller.counter.toString(),
+            style: const TextStyle(fontSize: 60),
           ),
-          const SizedBox(height: 50),
-          Row(
-            children: [
-              const SizedBox(width: 20),
-              OutlinedButton(
-                onPressed: () {
-                  Get.updateLocale(const Locale('en', 'US'));
-                },
-                child: const Text("English"),
-              ),
-              const SizedBox(width: 20),
-              OutlinedButton(
-                onPressed: () {
-                  Get.updateLocale(const Locale('hi', 'IN'));
-                },
-                child: const Text("Hindi"),
-              ),
-            ],
-          )
-        ],
+        ),
       ),
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {
+            controller.incrementCounter();
+          }),
     );
   }
 }
