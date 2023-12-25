@@ -17,22 +17,29 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          Container(
-            height: Get.height * .3,
-            width: Get.width * .8,
-            color: Colors.red,
-            child: const Center(
-              child: Text('Center'),
-            ),
+          ListTile(
+            title: Text('message'.tr),
+            subtitle: Text('name'.tr),
           ),
-          Container(
-            height: Get.height * .2,
-            width: Get.width * .8,
-            color: Colors.green,
-            child: const Center(
-              child: Text('Center'),
-            ),
-          ),
+          const SizedBox(height: 50),
+          Row(
+            children: [
+              const SizedBox(width: 20),
+              OutlinedButton(
+                onPressed: () {
+                  Get.updateLocale(const Locale('en', 'US'));
+                },
+                child: const Text("English"),
+              ),
+              const SizedBox(width: 20),
+              OutlinedButton(
+                onPressed: () {
+                  Get.updateLocale(const Locale('hi', 'IN'));
+                },
+                child: const Text("Hindi"),
+              ),
+            ],
+          )
         ],
       ),
     );
