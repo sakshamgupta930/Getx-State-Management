@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_x/favourite_controller.dart';
+import 'package:get_x/imagepicker_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,42 +12,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  FavouriteController favouriteController = Get.put(FavouriteController());
+  ImagePickerController controller = Get.put(ImagePickerController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Get X")),
       ),
-      body: ListView.builder(
-        itemCount: favouriteController.fruitList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: ListTile(
-              onTap: () {
-                if (favouriteController.tempFruit.contains(
-                    favouriteController.fruitList[index].toString())) {
-                  favouriteController.removefromFavouorite(
-                      favouriteController.fruitList[index].toString());
-                } else {
-                  favouriteController.addToFavouorite(
-                      favouriteController.fruitList[index].toString());
-                }
-              },
-              title: Text(favouriteController.fruitList[index].toString()),
-              trailing: Obx(
-                () => Icon(
-                  Icons.favorite,
-                  color: favouriteController.tempFruit.contains(
-                          favouriteController.fruitList[index].toString())
-                      ? Colors.red
-                      : Colors.grey,
-                ),
+      body: Obx(() {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 60,
+                backgroundColor: Colors.black,
+                backgroundImage: controller.imagePath.isNotEmpty
+                    ? FileImage(File(controller.imagePath.toString()))
+                    : null,
               ),
-            ),
-          );
-        },
-      ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  controller.getImage();
+                },
+                child: const Text("Pick Image"),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
