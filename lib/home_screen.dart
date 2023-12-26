@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_x/switch_controller.dart';
+import 'package:get_x/favourite_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,31 +10,42 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  SwitchController switchController = Get.put(SwitchController());
-  bool notification = false;
+  FavouriteController favouriteController = Get.put(FavouriteController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Center(child: Text("Get X")),
-        ),
-        body: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Notification"),
-                Obx(
-                  () => Switch(
-                    value: switchController.notification.value,
-                    onChanged: (value) {
-                      switchController.setNotification(value);
-                    },
-                  ),
+      appBar: AppBar(
+        title: const Center(child: Text("Get X")),
+      ),
+      body: ListView.builder(
+        itemCount: favouriteController.fruitList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            child: ListTile(
+              onTap: () {
+                if (favouriteController.tempFruit.contains(
+                    favouriteController.fruitList[index].toString())) {
+                  favouriteController.removefromFavouorite(
+                      favouriteController.fruitList[index].toString());
+                } else {
+                  favouriteController.addToFavouorite(
+                      favouriteController.fruitList[index].toString());
+                }
+              },
+              title: Text(favouriteController.fruitList[index].toString()),
+              trailing: Obx(
+                () => Icon(
+                  Icons.favorite,
+                  color: favouriteController.tempFruit.contains(
+                          favouriteController.fruitList[index].toString())
+                      ? Colors.red
+                      : Colors.grey,
                 ),
-              ],
-            )
-          ],
-        ));
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
